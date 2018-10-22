@@ -36,6 +36,15 @@ public class SQLiteJDBCDriverConnection {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public void commit() {
+		try {
+			connection.commit();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Disconnect to the data base, call lastest
@@ -51,7 +60,7 @@ public class SQLiteJDBCDriverConnection {
 	}
 
 	/**
-	 * Execute the sql query, suitable for insert and delete query
+	 * Execute the sql query, suitable for INSERT and DELETE query
 	 * 
 	 * @param sql
 	 */
@@ -72,6 +81,11 @@ public class SQLiteJDBCDriverConnection {
 		}
 	}
 
+	/**
+	 * Execute the sql query, suitable for SELECT query
+	 * @param sql
+	 * @return An ArrayList of word arcoding to 
+	 */
 	public ArrayList<Word> executeSQLSelectQuery(String sql) {
 		ArrayList<Word> dictionary = new ArrayList<Word>();
 		Statement statement = null;
@@ -79,12 +93,12 @@ public class SQLiteJDBCDriverConnection {
 		try {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
-
 			while (resultSet.next()) {
-				String word = resultSet.getString("word");
-				String detail = resultSet.getString("detail");
+				String word = resultSet.getString("WORD_TARGET");
+				String detail = resultSet.getString("WORD_MEANING");
 				Word temp = new Word(word, detail);
 				dictionary.add(temp);
+		
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -103,7 +117,7 @@ public class SQLiteJDBCDriverConnection {
 	public static void main(String[] args) {
 		SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
 		sqLiteJDBCDriverConnection.connect();
-		ArrayList<Word> dict = 	sqLiteJDBCDriverConnection.executeSQLSelectQuery("SELECT * FROM tbl_edict WHERE word LIKE \'pe%\';");
+		ArrayList<Word> dict = 	sqLiteJDBCDriverConnection.executeSQLSelectQuery("SELECT * FROM dictionary_e_v WHERE WORD_TARGET LIKE \'p%\';");
 		for(Word w: dict) {
 			System.out.println(w.getWordExplanain());
 		}
