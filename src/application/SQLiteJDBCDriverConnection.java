@@ -36,7 +36,7 @@ public class SQLiteJDBCDriverConnection {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
 	public void commit() {
 		try {
 			connection.commit();
@@ -83,8 +83,9 @@ public class SQLiteJDBCDriverConnection {
 
 	/**
 	 * Execute the sql query, suitable for SELECT query
+	 * 
 	 * @param sql
-	 * @return An ArrayList of word arcoding to 
+	 * @return An ArrayList of word arcoding to
 	 */
 	public ArrayList<Word> executeSQLSelectQuery(String sql) {
 		ArrayList<Word> dictionary = new ArrayList<Word>();
@@ -94,11 +95,11 @@ public class SQLiteJDBCDriverConnection {
 			statement = connection.createStatement();
 			resultSet = statement.executeQuery(sql);
 			while (resultSet.next()) {
-				String word = resultSet.getString("WORD_TARGET");
-				String detail = resultSet.getString("WORD_MEANING");
-				Word temp = new Word(word, detail);
-				dictionary.add(temp);
-		
+				int id = resultSet.getInt("ID");
+				String wordTarget = resultSet.getString("WORD_TARGET");
+				Word tempWord = new Word(id, wordTarget);
+				dictionary.add(tempWord);
+
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -110,17 +111,26 @@ public class SQLiteJDBCDriverConnection {
 				System.out.println(e.getMessage());
 			}
 		}
-		
+
 		return dictionary;
+	}
+
+	public void addWordDictionary(String wordTarget, String wordMeaning) {
+//	"INSERT INTO table1 (\r\n" + 
+//	" column1,\r\n" + 
+//	" column2 ,..)\r\n" + 
+//	"VALUES\r\n" + 
+//	" (\r\n" + 
+//	" value1,\r\n" + 
+//	" value2 ,...);"	
 	}
 
 	public static void main(String[] args) {
 		SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
 		sqLiteJDBCDriverConnection.connect();
-		ArrayList<Word> dict = 	sqLiteJDBCDriverConnection.executeSQLSelectQuery("SELECT * FROM dictionary_e_v WHERE WORD_TARGET LIKE \'p%\';");
-		for(Word w: dict) {
-			System.out.println(w.getWordExplanain());
-		}
+		ArrayList<Word> dict = sqLiteJDBCDriverConnection
+				.executeSQLSelectQuery("SELECT * FROM dictionary_e_v WHERE WORD_TARGET LIKE \'p%\';");
+
 		sqLiteJDBCDriverConnection.disconnect();
 	}
 }
