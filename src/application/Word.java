@@ -1,50 +1,44 @@
 package application;
 
-public class Word {
-	private String word_target;
-	private String word_explanain;
+import java.io.Serializable;
 
-	public Word(String word_target, String word_explanain) {
-		this.word_target = word_target;
-		this.word_explanain = word_explanain;
+public class Word implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private int id = 0;
+	private String wordTarget = "";
+	private String wordMeaning = "";
+	
+	public Word(int id, String wordTarget) {
+		super();
+		this.id = id;
+		this.wordTarget = wordTarget;
+	}
+	
+	public Word() {
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getWordTarget() {
-		return word_target;
+		return wordTarget;
 	}
 
-	public void setWordTarget(String word_target) {
-		this.word_target = word_target;
+	public void setWordTarget(String wordTarget) {
+		this.wordTarget = wordTarget;
 	}
 
-	public String getWordExplanain() {
-		return word_explanain;
-	}
-
-	public void setWordExplanain(String word_explanain) {
-		this.word_explanain = word_explanain;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Word other = (Word) obj;
-		if (word_explanain == null) {
-			if (other.word_explanain != null)
-				return false;
-		} else if (!word_explanain.equals(other.word_explanain))
-			return false;
-		if (word_target == null) {
-			if (other.word_target != null)
-				return false;
-		} else if (!word_target.equals(other.word_target))
-			return false;
-		return true;
-	}
-
+	
+	
+	
 }
