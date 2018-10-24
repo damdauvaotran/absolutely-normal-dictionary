@@ -60,9 +60,7 @@ public class MainController implements Initializable {
     private InsertController insertController;
 
 
-    public Dictionary getDictionary() {
-        return this.dictionary;
-    }
+
 
     public Word getSelectedWord() {
         return searchResult.getSelectionModel().getSelectedItem();
@@ -127,7 +125,7 @@ public class MainController implements Initializable {
         initSearchResult();
         SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
         sqLiteJDBCDriverConnection.connect();
-        //sqLiteJDBCDriverConnection.deleteWordDictionary(w.getId());
+        sqLiteJDBCDriverConnection.deleteWordDictionary(w.getId());
         sqLiteJDBCDriverConnection.disconnect();
     }
 
@@ -169,6 +167,7 @@ public class MainController implements Initializable {
             newWindow.setY(100);
             insertController = insertLoader.<InsertController>getController();
             insertController.setInsertStage(newWindow);
+            insertController.setSearchResult(this.searchResult);
             newWindow.show();
         } catch (IOException e) {
             e.printStackTrace();

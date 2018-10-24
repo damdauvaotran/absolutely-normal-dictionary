@@ -41,6 +41,11 @@ public class InsertController implements  Initializable {
 
     public MainController mainController;
     public Stage insertStage;
+    public ListView<Word> searchResult;
+
+    public void setSearchResult(ListView<Word> searchResult){
+        this.searchResult = searchResult;
+    }
 
     public void setInsertStage(Stage insertStage){
         this.insertStage = insertStage;
@@ -52,6 +57,7 @@ public class InsertController implements  Initializable {
 
     void initData(MainController mainController) {
         this.mainController = mainController;
+
         System.out.println(mainController.toString());
         if (mainController!=null&& mainController.getSelectedWord()!= null){
             System.out.println(mainController.getSelectedWord().getWordTarget());
@@ -66,11 +72,22 @@ public class InsertController implements  Initializable {
         String wordMeaning = insertWordMeaning.getHtmlText();
         SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
         sqLiteJDBCDriverConnection.connect();
-        sqLiteJDBCDriverConnection.addWordDictionary( wordTarget,wordTarget);
+        sqLiteJDBCDriverConnection.addWordDictionary( wordTarget,wordMeaning);
         sqLiteJDBCDriverConnection.disconnect();
+        updateResult(wordTarget, wordMeaning);
+
         this.insertStage.close();
     }
 
+    public void updateResult(String wordTarget,String wordMeaning) {
+        SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
+        sqLiteJDBCDriverConnection.connect();
+        Dictionary dictionary = new Dictionary(sqLiteJDBCDriverConnection.initialDictionary());
+        sqLiteJDBCDriverConnection.disconnect();
+        dictionary.add(new Word(0, wordTarget, wordMeaning));
+        ObservableList<Word> items = FXCollections.observableArrayList(dictionary.iterate());
+        this.searchResult.setItems(items);
+    }
     public void onClickCancel(){
         this.insertStage.close();
     }

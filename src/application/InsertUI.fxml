@@ -12,7 +12,7 @@
         <Label layoutX="55.0" layoutY="69.0" text="Word target" />
         <TextField fx:id="insertWordTarget" layoutX="151.0" layoutY="65.0" prefHeight="25.0" prefWidth="525.0" />
         <Label layoutX="55.0" layoutY="100.0" text="Word meaning" />
-        <Button fx:id="insertConfirm" layoutX="539.0" layoutY="350.0" mnemonicParsing="false" text="Add" />
-        <Button fx:id="insertCancel" layoutX="590.0" layoutY="350.0" mnemonicParsing="false" text="Cancel" />
+        <Button fx:id="insertConfirm" layoutX="539.0" layoutY="350.0" mnemonicParsing="false" text="Add" onAction="#onClickInsert" />
+        <Button fx:id="insertCancel" layoutX="590.0" layoutY="350.0" mnemonicParsing="false" onAction="#onClickCancel" text="Cancel" />
     </children>
 </AnchorPane>
