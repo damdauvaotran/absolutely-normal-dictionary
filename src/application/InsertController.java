@@ -61,6 +61,21 @@ public class InsertController implements  Initializable {
     }
 
 
+    public void  onClickInsert (){
+        String wordTarget = insertWordTarget.getText();
+        String wordMeaning = insertWordMeaning.getHtmlText();
+        SQLiteJDBCDriverConnection sqLiteJDBCDriverConnection = new SQLiteJDBCDriverConnection();
+        sqLiteJDBCDriverConnection.connect();
+        sqLiteJDBCDriverConnection.addWordDictionary( wordTarget,wordTarget);
+        sqLiteJDBCDriverConnection.disconnect();
+        this.insertStage.close();
+    }
+
+    public void onClickCancel(){
+        this.insertStage.close();
+    }
+
+
 
 
 }
