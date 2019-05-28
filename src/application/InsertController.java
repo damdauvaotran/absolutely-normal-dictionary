@@ -50,6 +50,10 @@ public class InsertController implements  Initializable {
     public void setInsertStage(Stage insertStage){
         this.insertStage = insertStage;
     }
+
+    public void setMainController (MainController mainController){
+        this.mainController = mainController;
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
